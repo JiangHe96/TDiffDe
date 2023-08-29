@@ -1,3 +1,5 @@
 # TDiffDe
 
-The further experiments are still being added. Code will be released when our paper is accepted.
+The code for TDiffDe. 
+
+Run 'main_real.py' and obatin the denoising results on real noisy OHS images.
