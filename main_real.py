@@ -48,42 +48,42 @@ def main(model_config = None):
         print(savepath)
         data = io.loadmat(r'data/ohs_real2.mat')
         img_noise = data['noise']
-        cut_max=100
+
         if not os.path.exists(savepath):
             os.makedirs(savepath)
-        for j in range(50,cut_max):
-            modelConfig["trun_cut"]=j
-            print(j)
-            img_nois=img_noise
 
-            # image_transpose
-            img_in = np.transpose(img_nois, [2, 0, 1])
-            # input_data_construction
-            img_in = img_in
-            with torch.no_grad():
-                img = Variable(torch.from_numpy(img_in).float()).view(1, -1, img_in.shape[1],img_in.shape[2]).cuda()
-                noiseimg = 2 * img - 1
-                out=eval(noiseimg.cuda(),modelConfig)
+        j=modelConfig["trun_cut"]
+        print(j)
+        img_nois=img_noise
 
-                # save_image(ana_refference[:, :, [14, 7, 2]].permute(2,0,1), os.path.join(savepath, "ID"+str(i+1)+"GT.png"), nrow=modelConfig["nrow"])
-                # save_image(img[:, [14, 7, 2], :, :], os.path.join(savepath, "ID" + str(i+1) + "noise.png"),nrow=modelConfig["nrow"])
-                save_image(out[:, [14, 7, 2], :, :], os.path.join(savepath, "Trunc" + str(j) + "output.png"),nrow=modelConfig["nrow"])
+        # image_transpose
+        img_in = np.transpose(img_nois, [2, 0, 1])
+        # input_data_construction
+        img_in = img_in
+        with torch.no_grad():
+            img = Variable(torch.from_numpy(img_in).float()).view(1, -1, img_in.shape[1],img_in.shape[2]).cuda()
+            noiseimg = 2 * img - 1
+            out=eval(noiseimg.cuda(),modelConfig)
 
-                # out_temp=out.permute(2, 3, 1, 0)
-                # out_ana=out_temp[:, :, :, 0]
-                # index[:, :, i]=analysis_accu(ana_refference,out_ana,1)
+            # save_image(ana_refference[:, :, [14, 7, 2]].permute(2,0,1), os.path.join(savepath, "ID"+str(i+1)+"GT.png"), nrow=modelConfig["nrow"])
+            # save_image(img[:, [14, 7, 2], :, :], os.path.join(savepath, "ID" + str(i+1) + "noise.png"),nrow=modelConfig["nrow"])
+            save_image(out[:, [14, 7, 2], :, :], os.path.join(savepath, "Trunc" + str(j) + "output.png"),nrow=modelConfig["nrow"])
 
-                # output = out_ana.cpu()
-                # output = output.numpy().astype(np.float32)
-                # output=output[20,:,:,:]
-                # writeTiff(output, output.shape[2], output.shape[0], output.shape[1],
-                #       os.path.join(savepath, "ID" + str(i + 1) + 'output.tiff'))
-                # writeTiff(img_refference, img_refference.shape[2], img_refference.shape[0], img_refference.shape[1],
-                #       os.path.join(savepath, "ID" + str(i + 1) + 'GT.tiff'))
-                # writeTiff(img_nois, img_nois.shape[2], img_nois.shape[0], img_nois.shape[1],
-                #       os.path.join(savepath, "ID" + str(i + 1) + 'noise.tiff'))
+            # out_temp=out.permute(2, 3, 1, 0)
+            # out_ana=out_temp[:, :, :, 0]
+            # index[:, :, i]=analysis_accu(ana_refference,out_ana,1)
 
-                # print("image "+str(i+1)+": ",index[:, 0, i])
+            # output = out_ana.cpu()
+            # output = output.numpy().astype(np.float32)
+            # output=output[20,:,:,:]
+            # writeTiff(output, output.shape[2], output.shape[0], output.shape[1],
+            #       os.path.join(savepath, "ID" + str(i + 1) + 'output.tiff'))
+            # writeTiff(img_refference, img_refference.shape[2], img_refference.shape[0], img_refference.shape[1],
+            #       os.path.join(savepath, "ID" + str(i + 1) + 'GT.tiff'))
+            # writeTiff(img_nois, img_nois.shape[2], img_nois.shape[0], img_nois.shape[1],
+            #       os.path.join(savepath, "ID" + str(i + 1) + 'noise.tiff'))
+
+            # print("image "+str(i+1)+": ",index[:, 0, i])
 
 if __name__ == '__main__':
     main()
