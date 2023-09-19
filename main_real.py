@@ -33,7 +33,7 @@ def main(model_config = None):
         "sampled_dir": "./SampledImgs/"+"HS"+"/",
         "sampledImgName": "TDiffDe.png",
         "nrow": 2,
-        "trun_cut": 35
+        "trun_cut": 90
         }
 
     print(modelConfig["save_weight_dir"])
